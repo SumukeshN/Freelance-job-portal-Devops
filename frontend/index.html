@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Freelance Job Portal</title>
+    <!-- Google Fonts for Modern Typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="app">
+        <!-- Authentication View -->
+        <div id="login-view" class="view active">
+            <div class="auth-card glassmorphism">
+                <h2>Welcome Back</h2>
+                <p class="subtitle">Log in to manage freelance jobs</p>
+                <form id="login-form">
+                    <div class="input-group">
+                        <label for="username">Username</label>
+                        <input type="text" id="username" placeholder="Enter username" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" placeholder="Enter password" required>
+                    </div>
+                    <div id="login-error" class="error-msg hidden">Invalid credentials. Try any non-empty values.</div>
+                    <button type="submit" class="btn primary-btn">Login</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Dashboard View -->
+        <div id="dashboard-view" class="view">
+            <header class="glassmorphism">
+                <div class="header-content">
+                    <h1>Freelance Hub</h1>
+                    <button id="logout-btn" class="btn secondary-btn">Logout</button>
+                </div>
+            </header>
+
+            <main class="dashboard-container">
+                <!-- Add Job Section -->
+                <section class="add-job-section glassmorphism">
+                    <h3>Post a New Job</h3>
+                    <form id="add-job-form">
+                        <div class="form-row">
+                            <input type="text" id="job-title" placeholder="Job Title" required>
+                            <input type="text" id="job-client" placeholder="Client Name" required>
+                        </div>
+                        <div class="form-row">
+                            <input type="text" id="job-budget" placeholder="Budget (e.g. $500)" required>
+                        </div>
+                        <textarea id="job-desc" placeholder="Job Description" rows="3" required></textarea>
+                        <button type="submit" class="btn primary-btn action-btn">Add Job</button>
+                    </form>
+                </section>
+
+                <!-- Job List Section -->
+                <section class="jobs-display-section">
+                    <h3>Available Jobs</h3>
+                    <div class="loader hidden" id="jobs-loader">Loading jobs...</div>
+                    <div id="jobs-list" class="jobs-grid">
+                        <!-- Job cards injected via JS -->
+                    </div>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
