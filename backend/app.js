@@ -94,6 +94,22 @@ app.post('/login', (req, res) => {
 });
 
 // =====================
+//   VIEW USERS (for demo/admin)
+// =====================
+
+// GET /users — View all registered users
+app.get('/users', (req, res) => {
+    try {
+        const users = JSON.parse(fs.readFileSync(USERS_FILE, 'utf8'));
+        // Return users without passwords for safety
+        const safeUsers = users.map(({ password, ...u }) => u);
+        res.json(safeUsers);
+    } catch (err) {
+        res.status(500).json({ error: 'Failed to read users' });
+    }
+});
+
+// =====================
 //   JOB ROUTES
 // =====================
 
