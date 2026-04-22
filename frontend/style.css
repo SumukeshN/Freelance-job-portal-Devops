@@ -10,6 +10,7 @@
     --text-muted: #94a3b8;
     --danger: #ef4444;
     --danger-hover: #dc2626;
+    --success: #22c55e;
     --border-radius: 12px;
     --transition-speed: 0.3s;
 }
@@ -29,7 +30,7 @@ body {
     flex-direction: column;
 }
 
-/* --- Utility Classes --- */
+/* --- Utility --- */
 .hidden { display: none !important; }
 .view {
     display: none;
@@ -58,25 +59,25 @@ body {
     font-size: 1rem;
     font-weight: 600;
     cursor: pointer;
-    transition: background-color var(--transition-speed), transform 0.1s;
+    transition: background-color var(--transition-speed), transform 0.1s, opacity 0.2s;
     outline: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
 }
 .btn:active { transform: scale(0.98); }
+.btn:disabled { opacity: 0.65; cursor: not-allowed; }
 
-.primary-btn {
-    background-color: var(--primary);
-    color: white;
-}
-.primary-btn:hover { background-color: var(--primary-hover); }
+.primary-btn { background-color: var(--primary); color: white; }
+.primary-btn:hover:not(:disabled) { background-color: var(--primary-hover); }
 
 .secondary-btn {
     background-color: transparent;
     border: 1px solid var(--text-main);
     color: var(--text-main);
 }
-.secondary-btn:hover {
-    background-color: rgba(255, 255, 255, 0.1);
-}
+.secondary-btn:hover { background-color: rgba(255, 255, 255, 0.1); }
 
 .danger-btn {
     background-color: var(--danger);
@@ -87,7 +88,7 @@ body {
 .danger-btn:hover { background-color: var(--danger-hover); }
 
 /* --- Forms --- */
-input, textarea {
+input, textarea, select {
     width: 100%;
     padding: 0.75rem 1rem;
     background: rgba(0, 0, 0, 0.2);
@@ -95,56 +96,147 @@ input, textarea {
     border-radius: 8px;
     color: white;
     font-size: 1rem;
-    margin-bottom: 1rem;
     transition: border-color var(--transition-speed);
+    appearance: none;
 }
-input:focus, textarea:focus {
+input:focus, textarea:focus, select:focus {
     outline: none;
     border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
 }
-.form-row {
-    display: flex;
-    gap: 1rem;
-    margin-bottom: 0px;
-}
+select option { background-color: #1e1b4b; color: white; }
+.form-row { display: flex; gap: 1rem; }
 
-/* --- Login View --- */
+/* ============================
+   AUTH PAGE (index.html)
+   ============================ */
+
 #login-view {
-    height: 100vh;
+    min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
+    padding: 2rem;
 }
+
 .auth-card {
     width: 100%;
-    max-width: 400px;
+    max-width: 440px;
     padding: 2.5rem;
-    text-align: center;
 }
-.auth-card h2 { margin-bottom: 0.5rem; }
-.auth-card .subtitle {
+
+/* Logo */
+.auth-logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-bottom: 1.75rem;
+}
+.logo-icon { font-size: 1.8rem; }
+.logo-text {
+    font-size: 1.5rem;
+    font-weight: 700;
+    background: linear-gradient(to right, var(--primary), var(--secondary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* Tab Switcher */
+.auth-tabs {
+    display: flex;
+    background: rgba(0,0,0,0.2);
+    border-radius: 8px;
+    padding: 4px;
+    margin-bottom: 1.75rem;
+    gap: 4px;
+}
+.auth-tab {
+    flex: 1;
+    padding: 0.6rem 1rem;
+    border: none;
+    background: transparent;
     color: var(--text-muted);
-    margin-bottom: 2rem;
+    font-size: 0.95rem;
+    font-weight: 600;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background var(--transition-speed), color var(--transition-speed);
 }
+.auth-tab.active {
+    background: var(--primary);
+    color: white;
+    box-shadow: 0 2px 8px rgba(99,102,241,0.4);
+}
+.auth-tab:hover:not(.active) { color: var(--text-main); background: rgba(255,255,255,0.05); }
+
+/* Auth Forms */
+.auth-form { display: none; flex-direction: column; gap: 0; }
+.auth-form.active { display: flex; }
+.auth-form h2 { margin-bottom: 0.25rem; font-size: 1.4rem; }
+.auth-form .subtitle {
+    color: var(--text-muted);
+    margin-bottom: 1.5rem;
+    font-size: 0.9rem;
+}
+
 .input-group {
     text-align: left;
-    margin-bottom: 0.25rem;
+    margin-bottom: 1rem;
 }
 .input-group label {
     display: block;
-    margin-bottom: 0.5rem;
-    font-size: 0.875rem;
+    margin-bottom: 0.4rem;
+    font-size: 0.85rem;
     color: var(--text-muted);
+    font-weight: 500;
 }
-.auth-card .btn { width: 100%; margin-top: 1rem; }
-.error-msg {
-    color: var(--secondary);
-    font-size: 0.875rem;
-    margin-top: 0.5rem;
-    text-align: left;
+.input-group input,
+.input-group select {
+    margin: 0;
 }
 
-/* --- Dashboard View --- */
+/* Messages */
+.error-msg {
+    color: #fca5a5;
+    background: rgba(239,68,68,0.12);
+    border: 1px solid rgba(239,68,68,0.3);
+    border-radius: 6px;
+    font-size: 0.875rem;
+    padding: 0.6rem 0.8rem;
+    margin-bottom: 0.75rem;
+    animation: fadeIn 0.2s ease;
+}
+.success-msg {
+    color: #86efac;
+    background: rgba(34,197,94,0.12);
+    border: 1px solid rgba(34,197,94,0.3);
+    border-radius: 6px;
+    font-size: 0.875rem;
+    padding: 0.6rem 0.8rem;
+    margin-bottom: 0.75rem;
+    animation: fadeIn 0.2s ease;
+}
+
+.auth-form .btn { width: 100%; margin-top: 0.5rem; }
+
+.auth-switch {
+    text-align: center;
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    margin-top: 1.25rem;
+}
+.auth-switch a {
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: 600;
+}
+.auth-switch a:hover { text-decoration: underline; }
+
+/* ============================
+   DASHBOARD PAGE (dashboard.html)
+   ============================ */
+
 header {
     padding: 1rem 2rem;
     margin-bottom: 2rem;
@@ -159,7 +251,9 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 1rem;
 }
+.header-left { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
 .header-content h1 {
     font-size: 1.5rem;
     background: linear-gradient(to right, var(--primary), var(--secondary));
@@ -167,22 +261,43 @@ header {
     -webkit-text-fill-color: transparent;
     font-weight: 700;
 }
+#welcome-user {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+}
+
+/* Role Badge */
+.role-badge {
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 0.2rem 0.6rem;
+    border-radius: 20px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+.role-admin {
+    background: rgba(99,102,241,0.2);
+    color: #a5b4fc;
+    border: 1px solid rgba(99,102,241,0.3);
+}
+.role-freelancer {
+    background: rgba(236,72,153,0.2);
+    color: #f9a8d4;
+    border: 1px solid rgba(236,72,153,0.3);
+}
 
 .dashboard-container {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 0 2rem;
+    padding: 0 2rem 3rem;
     display: flex;
     flex-direction: column;
     gap: 2rem;
-    padding-bottom: 3rem;
 }
 
-.add-job-section {
-    padding: 2rem;
-}
+.add-job-section { padding: 2rem; }
 .add-job-section h3 { margin-bottom: 1.5rem; }
-#job-desc { margin-bottom: 1rem; resize: vertical; }
+#job-desc { resize: vertical; margin-bottom: 1rem; }
 .action-btn { width: 150px; }
 
 .jobs-display-section h3 { margin-bottom: 1.5rem; }
@@ -214,11 +329,7 @@ header {
     align-items: flex-start;
     margin-bottom: 1rem;
 }
-.job-title {
-    font-size: 1.1rem;
-    font-weight: 600;
-    color: var(--text-main);
-}
+.job-title { font-size: 1.1rem; font-weight: 600; }
 .job-budget {
     background: rgba(99, 102, 241, 0.2);
     color: #818cf8;
@@ -226,6 +337,7 @@ header {
     border-radius: 4px;
     font-size: 0.875rem;
     font-weight: 600;
+    white-space: nowrap;
 }
 .job-desc {
     color: var(--text-muted);
@@ -241,7 +353,4 @@ header {
     border-top: 1px solid var(--card-border);
     padding-top: 1rem;
 }
-.job-client {
-    font-size: 0.8rem;
-    color: var(--text-muted);
-}
+.job-client { font-size: 0.8rem; color: var(--text-muted); }

@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard - Freelance Job Portal</title>
+    <title>Dashboard - Freelance Hub</title>
+    <meta name="description" content="Browse and manage freelance jobs on Freelance Hub.">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
@@ -11,32 +12,45 @@
     <div id="dashboard-view" class="view active">
         <header class="glassmorphism">
             <div class="header-content">
-                <h1>Freelance Hub</h1>
+                <div class="header-left">
+                    <h1>⚡ Freelance Hub</h1>
+                    <span id="welcome-user"></span>
+                    <span id="user-role-badge" class="role-badge"></span>
+                </div>
                 <button id="logout-btn" class="btn secondary-btn">Logout</button>
             </div>
         </header>
 
         <main class="dashboard-container">
-            <!-- Add Job Section -->
+            <!-- Add Job Section (Admin only, hidden for Freelancer via JS) -->
             <section class="add-job-section glassmorphism">
-                <h3>Post a New Job</h3>
+                <h3>📋 Post a New Job</h3>
                 <form id="add-job-form">
                     <div class="form-row">
-                        <input type="text" id="job-title" placeholder="Job Title" required>
-                        <input type="text" id="job-client" placeholder="Client Name" required>
+                        <div class="input-group" style="flex:1">
+                            <label for="job-title">Job Title</label>
+                            <input type="text" id="job-title" placeholder="e.g. Full Stack Developer" required>
+                        </div>
+                        <div class="input-group" style="flex:1">
+                            <label for="job-client">Client Name</label>
+                            <input type="text" id="job-client" placeholder="e.g. TechStart Inc" required>
+                        </div>
                     </div>
-                    <div class="form-row">
-                        <input type="text" id="job-budget" placeholder="Budget (e.g. $500)" required>
+                    <div class="input-group">
+                        <label for="job-budget">Budget</label>
+                        <input type="text" id="job-budget" placeholder="e.g. $500" required>
                     </div>
-                    <textarea id="job-desc" placeholder="Job Description" rows="3" required></textarea>
+                    <div class="input-group">
+                        <label for="job-desc">Job Description</label>
+                        <textarea id="job-desc" rows="3" placeholder="Describe the job requirements..." required></textarea>
+                    </div>
                     <button type="submit" class="btn primary-btn action-btn">Add Job</button>
                 </form>
             </section>
 
             <!-- Job List Section -->
             <section class="jobs-display-section">
-                <h3>Available Jobs</h3>
-                <div class="loader hidden" id="jobs-loader">Loading jobs...</div>
+                <h3>🚀 Available Jobs</h3>
                 <div id="jobs-list" class="jobs-grid">
                     <!-- Job cards injected via JS -->
                 </div>

@@ -3,30 +3,116 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - Freelance Job Portal</title>
+    <title>Freelance Hub - Register & Login</title>
+    <meta name="description" content="Sign in or create a new account on Freelance Hub - the modern job portal for freelancers and clients.">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div id="login-view" class="view active">
         <div class="auth-card glassmorphism">
-            <h2>Welcome Back</h2>
-            <p class="subtitle">Log in to manage freelance jobs</p>
-            <form id="login-form">
+
+            <!-- Logo / Branding -->
+            <div class="auth-logo">
+                <span class="logo-icon">⚡</span>
+                <span class="logo-text">Freelance Hub</span>
+            </div>
+
+            <!-- Tab Switcher -->
+            <div class="auth-tabs">
+                <button class="auth-tab active" id="tab-login" onclick="switchTab('login')">Login</button>
+                <button class="auth-tab" id="tab-register" onclick="switchTab('register')">Register</button>
+            </div>
+
+            <!-- ===== LOGIN FORM ===== -->
+            <form id="login-form" class="auth-form active">
+                <h2>Welcome Back</h2>
+                <p class="subtitle">Log in to your account</p>
+
                 <div class="input-group">
-                    <label for="username">Username</label>
-                    <input type="text" id="username" placeholder="Enter username" required>
+                    <label for="login-username">Username</label>
+                    <input type="text" id="login-username" placeholder="Enter your username" required>
                 </div>
                 <div class="input-group">
-                    <label for="password">Password</label>
-                    <input type="password" id="password" placeholder="Enter password" required>
+                    <label for="login-password">Password</label>
+                    <input type="password" id="login-password" placeholder="Enter your password" required>
                 </div>
-                <div id="login-error" class="error-msg hidden">Invalid credentials. Try any non-empty values.</div>
-                <button type="submit" class="btn primary-btn">Login</button>
+
+                <div id="login-error" class="error-msg hidden"></div>
+                <div id="login-success" class="success-msg hidden"></div>
+
+                <button type="submit" class="btn primary-btn" id="login-btn">
+                    <span class="btn-text">Login</span>
+                    <span class="btn-spinner hidden">⏳</span>
+                </button>
+
+                <p class="auth-switch">Don't have an account? <a href="#" onclick="switchTab('register')">Register here</a></p>
             </form>
+
+            <!-- ===== REGISTER FORM ===== -->
+            <form id="register-form" class="auth-form">
+                <h2>Create Account</h2>
+                <p class="subtitle">Join Freelance Hub today</p>
+
+                <div class="input-group">
+                    <label for="reg-username">Username</label>
+                    <input type="text" id="reg-username" placeholder="Choose a username" required>
+                </div>
+                <div class="input-group">
+                    <label for="reg-password">Password</label>
+                    <input type="password" id="reg-password" placeholder="Create a password" required>
+                </div>
+                <div class="input-group">
+                    <label for="reg-confirm-password">Confirm Password</label>
+                    <input type="password" id="reg-confirm-password" placeholder="Repeat your password" required>
+                </div>
+                <div class="input-group">
+                    <label for="reg-role">Role</label>
+                    <select id="reg-role" required>
+                        <option value="" disabled selected>Select your role</option>
+                        <option value="admin">Admin (Post & Delete Jobs)</option>
+                        <option value="freelancer">Freelancer (Browse Jobs)</option>
+                    </select>
+                </div>
+
+                <div id="register-error" class="error-msg hidden"></div>
+                <div id="register-success" class="success-msg hidden"></div>
+
+                <button type="submit" class="btn primary-btn" id="register-btn">
+                    <span class="btn-text">Create Account</span>
+                    <span class="btn-spinner hidden">⏳</span>
+                </button>
+
+                <p class="auth-switch">Already have an account? <a href="#" onclick="switchTab('login')">Login here</a></p>
+            </form>
+
         </div>
     </div>
 
+    <script>
+        // Tab switching function (global, needed by inline onclick)
+        function switchTab(tab) {
+            const loginForm = document.getElementById('login-form');
+            const registerForm = document.getElementById('register-form');
+            const tabLogin = document.getElementById('tab-login');
+            const tabRegister = document.getElementById('tab-register');
+
+            if (tab === 'login') {
+                loginForm.classList.add('active');
+                registerForm.classList.remove('active');
+                tabLogin.classList.add('active');
+                tabRegister.classList.remove('active');
+            } else {
+                registerForm.classList.add('active');
+                loginForm.classList.remove('active');
+                tabRegister.classList.add('active');
+                tabLogin.classList.remove('active');
+            }
+
+            // Clear messages on switch
+            document.querySelectorAll('.error-msg, .success-msg').forEach(el => el.classList.add('hidden'));
+        }
+    </script>
     <script src="script.js"></script>
 </body>
 </html>
