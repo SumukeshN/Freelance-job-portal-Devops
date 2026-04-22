@@ -11,7 +11,7 @@ pipeline {
         stage('Install Dependencies') {
             steps {
                 dir('backend') {
-                    sh 'npm install'
+                    bat 'npm install'
                 }
             }
         }
@@ -20,12 +20,21 @@ pipeline {
             steps {
                 dir('backend') {
                     // Stop any existing node process running app.js to prevent port collision
-                    sh 'pkill -f "node app.js" || true'
+                    bat 'taskkill /F /IM node.exe /T || exit 0'
                     
                     // Run the app in the background
-                    sh 'nohup node app.js > server.log 2>&1 &'
+                    bat 'start /B node app.js > server.log 2>&1'
                 }
             }
+        }
+    }
+
+    post {
+        success {
+            echo 'Pipeline completed successfully! App is running.'
+        }
+        failure {
+            echo 'Pipeline failed. Check the console output for errors.'
         }
     }
 }
