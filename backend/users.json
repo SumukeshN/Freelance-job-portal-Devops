@@ -5,5 +5,19 @@
     "password": "admin123",
     "role": "admin",
     "createdAt": "2026-04-22T14:41:15.227Z"
+  },
+  {
+    "id": "1776872224493",
+    "username": "admin",
+    "password": "admin",
+    "role": "admin",
+    "createdAt": "2026-04-22T15:37:04.493Z"
+  },
+  {
+    "id": "1776872317712",
+    "username": "ramesh",
+    "password": "ramesh",
+    "role": "freelancer",
+    "createdAt": "2026-04-22T15:38:37.712Z"
   }
 ]

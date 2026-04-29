@@ -15,6 +15,11 @@ app.use(express.json());
 // Serve static frontend files
 app.use(express.static(path.join(__dirname, '../frontend')));
 
+// Clean URL routes
+app.get('/dashboard', (req, res) => {
+    res.sendFile(path.join(__dirname, '../frontend/dashboard.html'));
+});
+
 // Initialize database files if they don't exist
 const initDB = () => {
     if (!fs.existsSync(DATA_FILE)) {
